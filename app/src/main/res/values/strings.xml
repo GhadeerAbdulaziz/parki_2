@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">parki</string>
+    <color name="white">#FFFFFF</color>
+    <string name="name_error">فضلا قم بإدخال الاسم</string>
+    <string name="phone_error">فضلا قم بإدخال رقم الهاتف </string>
+    <string name="email_error">فضلا قم بإدخال البريد الالكتروني</string>
+    <string name="error_invalid_email">البريد الالكتروني غير صحيح</string>
+    <string name="password_error">فضلا قم بإدخال كلمة المرور</string>
+    <string name="car_error">فضلا قم إدخال نوع السيارة </string>
+    <string name="carnum_error">فضلا قم بإدخال رقم لوحة السيارة</string>
+    <string name="error_invalid_password">كلمة المرور غير صحيحة ادنى حد 6 حروف</string>
+</resources>

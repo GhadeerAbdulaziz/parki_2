@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/txtreg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/pic7"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".register">
+
+    <EditText
+        android:id="@+id/txtname"
+        android:layout_width="297dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginEnd="50dp"
+        android:background="@color/white"
+        android:hint="  الاسم"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/txtemail"
+        android:layout_width="297dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="50dp"
+        android:background="@color/white"
+        android:ems="10"
+        android:hint="  البريد الالكتروني"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtname"
+
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/txtpass"
+        android:layout_width="297dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="50dp"
+        android:background="@color/white"
+        android:ems="10"
+        android:hint="                                                رقم المرور"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtemail"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/txtphone"
+        android:layout_width="297dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="50dp"
+        android:background="@color/white"
+        android:ems="10"
+        android:hint="                                                رقم الهاتف "
+        android:inputType="phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtpass"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/txtcar"
+        android:layout_width="297dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="50dp"
+        android:background="@color/white"
+        android:ems="10"
+        android:hint="  نوع السيارة"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtphone"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/txtcarnum"
+        android:layout_width="297dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="50dp"
+        android:background="@color/white"
+        android:ems="10"
+        android:hint="  رقم لوحة السيارة "
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtcar"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/txtlog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="138dp"
+        android:layout_marginTop="153dp"
+        android:layout_marginEnd="250dp"
+        android:layout_marginBottom="97dp"
+        android:text="الدخول"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtcarnum"
+        tools:ignore="MissingConstraints"></TextView>
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="23dp"
+        android:layout_height="13dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="212dp"
+        tools:layout_editor_absoluteY="294dp" />
+
+    <Button
+        android:id="@+id/btnreg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="50dp"
+        android:text="التسجيل "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.56"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtcarnum"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/member"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="68dp"
+        android:layout_marginBottom="99dp"
+        android:text="لديك حساب مسبقا ؟"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtlog"
+        app:layout_constraintTop_toBottomOf="@+id/btnreg"
+        tools:ignore="MissingConstraints" />v
+</androidx.constraintlayout.widget.ConstraintLayout>

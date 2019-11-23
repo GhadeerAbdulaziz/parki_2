@@ -1,28 +1,48 @@
 package com.example.parki;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Patterns;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class register extends AppCompatActivity {
-    DatabaseHelper db;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class register extends AppCompatActivity implements View.OnClickListener {
+
     Button _btnreg;
     TextView _txtlog;
     EditText _txtname, _txtemaile, _txtpass, __txtphone, _txtcar, _txtcarnum;
-    boolean isNameValid, isEmailValid, isPhoneValid, isPasswordValid, isCarValid, isCarnumValid;
+
+    public static boolean isValidEmailAddress(String email) {
+        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+        java.util.regex.Matcher m = p.matcher(email);
+        return m.matches();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        db = new DatabaseHelper(this);
+
         _btnreg = (Button) findViewById(R.id.btnreg);
         _txtname = (EditText) findViewById(R.id.txtname);
         _txtemaile = (EditText) findViewById(R.id.txtemail);
@@ -32,115 +52,110 @@ public class register extends AppCompatActivity {
         _txtcarnum = (EditText) findViewById(R.id.txtcarnum);
         _txtlog = (TextView) findViewById(R.id.txtlog);
 
-        _btnreg.setOnClickListener(new View.OnClickListener() {
-            @Override
-
-            public void onClick(View v) {
-                SetValidation();
-            }
-                /*
-                String name=_txtname.getText().toString();
-                String email=_txtemaile.getText().toString();
-                String pass=_txtpass.getText().toString();
-                String phone=__txtphone.getText().toString();
-                String car=_txtcar.getText().toString();
-                String carnum=_txtcarnum.getText().toString();
-                db.addUser(name,email,pass,phone,car,carnum);
-                Toast.makeText(getApplicationContext(),"regester successfully",Toast.LENGTH_LONG).show();
-                Intent movToLogin=new Intent(register.this,MainActivity.class);
-                startActivity(movToLogin);
-                /*
-                if (val > 0){
-                    Toast.makeText(getApplicationContext(),"regester successfully",Toast.LENGTH_LONG).show();
-                    Intent movToLogin=new Intent(register.this,MainActivity.class);
-                    startActivity(movToLogin);
-                }else{
-                    Toast.makeText(getApplicationContext(),"Registration Error",Toast.LENGTH_LONG).show();
-                }
-*/
-
-
-        });
-        _txtlog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(register.this, MainActivity.class);
-                startActivity(intent);
-            }
-
-
-        });
+        _btnreg.setOnClickListener(this);
+        _txtlog.setOnClickListener(this);
     }
 
-    public void SetValidation() {
-        // Check for a valid name.
-        if (_txtname.getText().toString().isEmpty()) {
-            _txtname.setError(getResources().getString(R.string.name_error));
-            isNameValid = false;
-        } else {
-            isNameValid = true;
-        }
+    @Override
+    public void onClick(View view) {
+        if (view == _txtlog) {
+            register.this.finish();
+        } else if (view == _btnreg) {
+            if (TextUtils.isEmpty(_txtname.getText())) {
+                _txtname.setError(getString(R.string.required_field));
+            } else if (!isValidEmailAddress(_txtemaile.getText().toString())) {
 
-        // Check for a valid email address.
-        if (_txtemaile.getText().toString().isEmpty()) {
-            _txtemaile.setError(getResources().getString(R.string.email_error));
-            isEmailValid = false;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(_txtemaile.getText().toString()).matches()) {
-            _txtemaile.setError(getResources().getString(R.string.error_invalid_email));
-            isEmailValid = false;
-        } else {
-            isEmailValid = true;
-        }
+                _txtemaile.setError(getString(R.string.valid_email));
 
-        // Check for a valid phone number.
-        if (__txtphone.getText().toString().isEmpty()) {
-            __txtphone.setError(getResources().getString(R.string.phone_error));
-            isPhoneValid = false;
-        } else {
-            isPhoneValid = true;
-        }
+            } else if (TextUtils.isEmpty(_txtpass.getText())) {
 
-        // Check for a valid password.
-        if (_txtpass.getText().toString().isEmpty()) {
-            _txtpass.setError(getResources().getString(R.string.password_error));
-            isPasswordValid = false;
-        } else if (_txtpass.getText().length() < 6) {
-            _txtpass.setError(getResources().getString(R.string.error_invalid_password));
-            isPasswordValid = false;
-        } else {
-            isPasswordValid = true;
-        }
-        if (_txtcar.getText().toString().isEmpty()) {
-            _txtcar.setError(getResources().getString(R.string.car_error));
-            isCarValid = false;
-        } else {
-            isCarValid = true;
-        }
-        if (_txtcarnum.getText().toString().isEmpty()) {
-            _txtcarnum.setError(getResources().getString(R.string.carnum_error));
-            isCarnumValid = false;
-        } else {
-            isCarnumValid = true;
-        }
+                _txtpass.setError(getString(R.string.required_field));
+            } else if ( __txtphone.getText().length()<6 ){
+                _txtpass.setError(" كلمة المرور غير صحيحة ادنى حد 6 حروف");
 
-        if (isNameValid && isEmailValid && isPhoneValid && isPasswordValid) {
-            if (!db.checkUser(_txtemaile.getText().toString().trim())) {
-                String name = _txtname.getText().toString();
-                String email = _txtemaile.getText().toString();
-                String phone = __txtphone.getText().toString();
-                String car = _txtcar.getText().toString();
-                String carnum = _txtcarnum.getText().toString();
-                db.addUser(name, email, pass, phone, car, carnum);
-                Toast.makeText(getApplicationContext(), "تم التسجيل بنجاح", Toast.LENGTH_LONG).show();
-                Intent movToLogin = new Intent(register.this, MainActivity.class);
-                startActivity(movToLogin);
+            } else if (TextUtils.isEmpty(__txtphone.getText())) {
+
+                __txtphone.setError(getString(R.string.required_field));
+
+            } else if (TextUtils.isEmpty(_txtcar.getText())) {
+
+                _txtcar.setError(getString(R.string.required_field));
+
+            } else if (TextUtils.isEmpty(_txtcarnum.getText())) {
+
+                _txtcarnum.setError(getString(R.string.required_field));
 
             } else {
-                Toast.makeText(getApplicationContext(), "البريد الالكتروني مسجل مسبقا ", Toast.LENGTH_LONG).show();
+
+                signUpApi();
+
             }
 
         }
     }
+
+    private void signUpApi() {
+
+        //progressBar.setVisibility(View.VISIBLE);
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        String url = Constants.REGISTER_URL;
+        url = url.replace(" ", "%20");
+
+        Log.e("sign up API  :", url);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject apiResult = new JSONObject(response);
+
+                    int status = apiResult.getInt("success");
+
+                    if (status == 1) {
+                        Toast.makeText(register.this, apiResult.getString("message"), Toast.LENGTH_LONG).show();
+                        register.this.finish();
+                    } else {
+                        Toast.makeText(register.this, apiResult.getString("message"), Toast.LENGTH_LONG).show();
+                    }
+
+                } catch (JSONException e) {
+                    //e.printStackTrace();
+                    //progressBar.setVisibility(View.GONE);
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //progressBar.setVisibility(View.GONE);
+
+                Toast.makeText(register.this, "Network Connection Error", Toast.LENGTH_LONG).show();
+            }
+        }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("name", _txtname.getText().toString());
+                params.put("email", _txtemaile.getText().toString());
+                params.put("password", _txtpass.getText().toString());
+                params.put("mobile", __txtphone.getText().toString());
+                params.put("cartype", _txtcar.getText().toString());
+                params.put("carnumber", _txtcarnum.getText().toString());
+
+                return params;
+            }
+        };
+
+        queue.add(stringRequest);
+
+    }
+
+
 }
 
 

@@ -1,59 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/pic3">
 
-
-    <ProgressBar
-        android:id="@+id/loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="64dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/txtPass"
-        app:layout_constraintStart_toStartOf="@+id/txtPass"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
-
     <Button
         android:id="@+id/btnlogw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="161dp"
-        android:layout_marginTop="584dp"
-        android:layout_marginEnd="161dp"
-        android:layout_marginBottom="99dp"
         android:text="تسجيل الدخول"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/textwel"
-        android:layout_width="346dp"
-        android:layout_height="151dp"
-        android:layout_marginStart="33dp"
-        android:layout_marginTop="464dp"
-        android:layout_marginEnd="33dp"
-        android:layout_marginBottom="17dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="35dp"
+        android:layout_marginBottom="75dp"
         android:text="المواقف الذكية تسهل عليك عملية إيجاد موقف فارغ لسيارتك بأسرع وقت كما يوضح لك الطريق للوصول إليه "
-        android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnlogw"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
+        android:gravity="center"
+        android:textSize="22sp" />
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:indeterminate="true" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

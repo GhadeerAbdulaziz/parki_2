@@ -1,169 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/txtreg"
     android:layout_width="match_parent"
+    android:background="@drawable/pic3"
     android:layout_height="match_parent"
-    android:background="@drawable/pic7"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".register">
+    android:layoutDirection="rtl"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <EditText
-        android:id="@+id/txtname"
-        android:layout_width="297dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="160dp"
-        android:layout_marginEnd="50dp"
-        android:background="@color/white"
-        android:hint="  الاسم"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
-
-    <EditText
-        android:id="@+id/txtemail"
-        android:layout_width="297dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="50dp"
-        android:background="@color/white"
-        android:ems="10"
-        android:hint="  البريد الالكتروني"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtname"
-
-        tools:ignore="MissingConstraints" />
-
-    <EditText
-        android:id="@+id/txtpass"
-        android:layout_width="297dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="50dp"
-        android:background="@color/white"
-        android:ems="10"
-        android:hint="                                                رقم المرور"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtemail"
-        tools:ignore="MissingConstraints" />
-
-    <EditText
-        android:id="@+id/txtphone"
-        android:layout_width="297dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="50dp"
-        android:background="@color/white"
-        android:ems="10"
-        android:hint="                                                رقم الهاتف "
-        android:inputType="phone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtpass"
-        tools:ignore="MissingConstraints" />
-
-    <EditText
-        android:id="@+id/txtcar"
-        android:layout_width="297dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="50dp"
-        android:background="@color/white"
-        android:ems="10"
-        android:hint="  نوع السيارة"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtphone"
-        tools:ignore="MissingConstraints" />
-
-    <EditText
-        android:id="@+id/txtcarnum"
-        android:layout_width="297dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="50dp"
-        android:background="@color/white"
-        android:ems="10"
-        android:hint="  رقم لوحة السيارة "
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtcar"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/txtlog"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="138dp"
-        android:layout_marginTop="153dp"
-        android:layout_marginEnd="250dp"
-        android:layout_marginBottom="97dp"
-        android:text="الدخول"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtcarnum"
-        tools:ignore="MissingConstraints"></TextView>
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="45dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/txtname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/user_name_edit_text_background"
+            android:selectAllOnFocus="true"
+            android:inputType="text"
+            android:hint="@string/name"/>
+
+        <EditText
+            android:id="@+id/txtemail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/user_name_edit_text_background"
+            android:hint="@string/email"
+            android:layout_marginTop="10dp"
+            android:inputType="textEmailAddress"
+            android:selectAllOnFocus="true"/>
+
+        <EditText
+            android:id="@+id/txtpass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/user_name_edit_text_background"
+            android:hint="@string/password"
+            android:gravity="right"
+            android:layout_marginTop="10dp"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:selectAllOnFocus="true"/>
+
+        <EditText
+            android:id="@+id/txtphone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="right"
+            android:background="@drawable/user_name_edit_text_background"
+            android:hint="@string/mobile"
+            android:inputType="phone"/>
+
+        <EditText
+            android:id="@+id/txtcar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/user_name_edit_text_background"
+            android:hint="@string/car_type"
+            android:inputType="text"/>
+
+        <EditText
+            android:id="@+id/txtcarnum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/user_name_edit_text_background"
+            android:hint="@string/car_number"
+            android:inputType="text"/>
+
+        <Button
+            android:id="@+id/btnreg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/login_button_background"
+            android:gravity="center"
+            android:minHeight="35dp"
+            android:text="@string/sign_up_now"
+            android:textColor="@color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:includeFontPadding="false"
+                android:padding="5dp"
+                android:text="@string/have_account"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/txtlog"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:text="@string/log_in_now"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <ProgressBar
-        android:id="@+id/loading"
-        android:layout_width="23dp"
-        android:layout_height="13dp"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="212dp"
-        tools:layout_editor_absoluteY="294dp" />
-
-    <Button
-        android:id="@+id/btnreg"
+        android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="50dp"
-        android:text="التسجيل "
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.56"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:indeterminate="true"
+        android:visibility="gone" />
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtcarnum"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/member"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="68dp"
-        android:layout_marginBottom="99dp"
-        android:text="لديك حساب مسبقا ؟"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/txtlog"
-        app:layout_constraintTop_toBottomOf="@+id/btnreg"
-        tools:ignore="MissingConstraints" />v
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

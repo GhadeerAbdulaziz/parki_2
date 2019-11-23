@@ -1,83 +1,138 @@
 package com.example.parki;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Patterns;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.parki.models.UserData;
 
-public class MainActivity extends AppCompatActivity {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
     Button _btnlog;
-    EditText _txtEmail, _txtPass;
+    EditText emailEditText, passwordEditText;
     TextView _txtsign;
-    boolean isEmailValid, isPasswordValid;
-DatabaseHelper db;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        db =new DatabaseHelper(this);
+
         _btnlog = (Button) findViewById(R.id.textwel);
-        _txtEmail = (EditText) findViewById(R.id.txtEmail);
-        _txtPass = (EditText) findViewById(R.id.txtPass);
+        emailEditText = (EditText) findViewById(R.id.txtEmail);
+        passwordEditText = (EditText) findViewById(R.id.txtPass);
         _txtsign = (TextView) findViewById(R.id.txtsign);
-        _btnlog.setOnClickListener(new View.OnClickListener() {
+        _btnlog.setOnClickListener(this);
+        _txtsign.setOnClickListener(this);
 
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        if (view == _txtsign) {
+            Intent intent = new Intent(MainActivity.this, register.class);
+            startActivity(intent);
+        } else if (view == _btnlog) {
+
+            if (TextUtils.isEmpty(emailEditText.getText())) {
+
+                emailEditText.setError(getString(R.string.required_field));
+
+            } else if (TextUtils.isEmpty(passwordEditText.getText())) {
+
+                passwordEditText.setError(getString(R.string.required_field));
+
+            } else {
+                //call login api
+                loginApi();
+            }
+        }
+
+    }
+
+    private void loginApi() {
+
+        //progressBar.setVisibility(View.VISIBLE);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = Constants.LOGIN_URL;
+        url = url.replace(" ", "%20");
+
+        Log.e("Login API", url);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
-            public void onClick(View v) {
-                SetValidation();
+            public void onResponse(String response) {
+                try {
+                    JSONObject apiResult = new JSONObject(response);
+
+                    if (apiResult.has("success")) {
+
+                        Toast.makeText(MainActivity.this, getString(R.string.login_failed), Toast.LENGTH_LONG).show();
+
+                    } else {
+                        Log.e("apiResult" , apiResult.toString());
+                        UserData userData = new UserData();
+                        userData.parseData(apiResult);
+
+                        MyApplication app = ((MyApplication) getApplication());
+                        app.setCurrentUser(userData);
+
+                        startActivity(new Intent(MainActivity.this, MapsActivity.class));
+                        MainActivity.this.finish();
+
+                    }
+
+
+                } catch (JSONException e) {
+                    //e.printStackTrace();
+                    //progressBar.setVisibility(View.GONE);
+                    Toast.makeText(MainActivity.this, "Server Error", Toast.LENGTH_LONG).show();
+
+                }
+
             }
-
-
-        });
-        _txtsign.setOnClickListener(new View.OnClickListener() {
+        }, new Response.ErrorListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent =new Intent (MainActivity.this,register.class);
-                startActivity(intent);
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(MainActivity.this, "Network Connection Error", Toast.LENGTH_LONG).show();
+                //progressBar.setVisibility(View.GONE);
             }
-        });
-
-    }
-    public void SetValidation() {
-        // Check for a valid email address.
-        if (_txtEmail.getText().toString().isEmpty()) {
-            _txtEmail.setError(getResources().getString(R.string.email_error));
-            isEmailValid = false;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(_txtEmail.getText().toString()).matches()) {
-            _txtEmail.setError(getResources().getString(R.string.error_invalid_email));
-            isEmailValid = false;
-        } else  {
-            isEmailValid = true;
         }
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
 
-        // Check for a valid password.
-        if (_txtPass.getText().toString().isEmpty()) {
-            _txtPass.setError(getResources().getString(R.string.password_error));
-            isPasswordValid = false;
+                params.put("email", emailEditText.getText().toString());
+                params.put("password", passwordEditText.getText().toString());
 
-        } else  {
-            isPasswordValid = true;
-        }
-
-        if (isEmailValid && isPasswordValid) {
-            String email=_txtEmail.getText().toString();
-            String pass=_txtPass.getText().toString();
-            Boolean res =db.checkUser(email,pass);
-            if(res==true){
-                Toast.makeText(MainActivity.this,"تم الدخول بنجاح",Toast.LENGTH_LONG).show();
-
-            }else{
-                Toast.makeText(MainActivity.this,"البريد الالكتروني او كلمة المرور غير صحيح",Toast.LENGTH_LONG).show();
-
+                return params;
             }
+        };
 
-        }
+        queue.add(stringRequest);
 
     }
-    }
+}
+

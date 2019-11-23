@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME="register.db";
-    public static final String TABLE_NAME="register";
+    public static final String DATABASE_NAME="smartparking.db";
+    public static final String TABLE_NAME="users";
     public static final String COL_1 ="ID";
     public static final String COL_2 ="Name";
     public static final String COL_3 ="email";
@@ -25,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE register (ID INTEGER PRIMARY KEY AUTOINCREMENT,Name TEXT, Email TEXT, Password TEXT, Phone TEXT, Cartype TEXT, Carnum TEXT)");
+        db.execSQL("CREATE TABLE users (ID INTEGER PRIMARY KEY AUTOINCREMENT,Name TEXT, Email TEXT, Password TEXT, Phone TEXT, Cartype TEXT, Carnum TEXT)");
 
     }
 
@@ -43,7 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("Phone",phone);
         contentValues.put("CarType",car);
         contentValues.put("CarNum",carnum);
-        db.insert("register",null,contentValues);
+        db.insert(TABLE_NAME,null,contentValues);
         db.close();
 
 
@@ -64,5 +64,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else
           return false;
      }
+
+    /**
+     * This method to check user exist or not
+     *
+     * @param email
+     * @return true/false
+     */
+    public boolean checkUser(String email) {
+
+        // array of columns to fetch
+        String[] columns = {
+                COL_1
+        };
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // selection criteria
+        String selection = COL_3 + " = ?";
+
+        // selection argument
+        String[] selectionArgs = {email};
+
+        // query user table with condition
+        /**
+         * Here query function is used to fetch records from user table this function works like we use sql query.
+         * SQL query equivalent to this query function is
+         * SELECT user_id FROM user WHERE user_email = 'jack@androidtutorialshub.com';
+         */
+        Cursor cursor = db.query(TABLE_NAME, //Table to query
+                columns,                    //columns to return
+                selection,                  //columns for the WHERE clause
+                selectionArgs,              //The values for the WHERE clause
+                null,                       //group the rows
+                null,                      //filter by row groups
+                null);                      //The sort order
+        int cursorCount = cursor.getCount();
+        cursor.close();
+        db.close();
+
+        if (cursorCount > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+
 
 }

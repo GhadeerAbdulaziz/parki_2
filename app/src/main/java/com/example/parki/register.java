@@ -1,6 +1,7 @@
 package com.example.parki;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -70,7 +71,7 @@ public class register extends AppCompatActivity implements View.OnClickListener 
             } else if (TextUtils.isEmpty(_txtpass.getText())) {
 
                 _txtpass.setError(getString(R.string.required_field));
-            } else if ( __txtphone.getText().length()<6 ){
+            } else if ( _txtpass.getText().length()<6 ){
                 _txtpass.setError(" كلمة المرور غير صحيحة ادنى حد 6 حروف");
 
             } else if (TextUtils.isEmpty(__txtphone.getText())) {
@@ -91,7 +92,9 @@ public class register extends AppCompatActivity implements View.OnClickListener 
 
             }
 
+
         }
+
     }
 
     private void signUpApi() {
@@ -114,12 +117,24 @@ public class register extends AppCompatActivity implements View.OnClickListener 
                     int status = apiResult.getInt("success");
 
                     if (status == 1) {
+//                        Toast.makeText(register.this, "Network", Toast.LENGTH_LONG).show();
+
+
                         Toast.makeText(register.this, apiResult.getString("message"), Toast.LENGTH_LONG).show();
+//
+                        Handler h = new Handler();
+                        h.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(register.this, "الرجاء التحقق من البريد الالكتروني لتفعيل الحساب", Toast.LENGTH_SHORT).show();
+                            }
+                        }, 800);
+
                         register.this.finish();
                     } else {
                         Toast.makeText(register.this, apiResult.getString("message"), Toast.LENGTH_LONG).show();
                     }
-
+//
                 } catch (JSONException e) {
                     //e.printStackTrace();
                     //progressBar.setVisibility(View.GONE);
@@ -127,6 +142,7 @@ public class register extends AppCompatActivity implements View.OnClickListener 
                 }
 
             }
+
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -135,6 +151,7 @@ public class register extends AppCompatActivity implements View.OnClickListener 
                 Toast.makeText(register.this, "Network Connection Error", Toast.LENGTH_LONG).show();
             }
         }
+
         ) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
